@@ -12,6 +12,7 @@
 		"d3-array": "^1.2.0",
 		"d3-scale": "^1.0.6",
 		"d3-shape": "^1.2.0",
+		"pgn-parser": "0.0.9",
 		"prop-types": "^15.5.10",
 		"react": "16.0.0-alpha.12",
 		"react-native": "0.48.2",

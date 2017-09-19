@@ -7,8 +7,12 @@ import {
   View,
   Button,
   Slider,
-  Picker
+  Picker,
+  Switch
 } from 'react-native';
+
+
+// import { CheckBox } from 'react-native-elements'
 
 import Board from './components/Board.js'
 import { Chess } from 'chess.js'
@@ -21,7 +25,7 @@ var game1 = `1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 4. Bd2 O-O
 
 var game2 = `1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6
 5. O-O Nxe4 6. d4 b5 7. Bb3 d5 8. dxe5 Be6
-9. Qe2 {An improvement on the castomary 9. c3} Na5 10. Nbd2 c5 11. Nxe4 dxe4 12. Bxe6 exf3
+9. Qe2 Na5 10. Nbd2 c5 11. Nxe4 dxe4 12. Bxe6 exf3
 13. Bxf7+ Kxf7 14. Qxf3+ Ke8 15. Rd1 Qc8 16. e6 Qb7
 17. Rd5 Qe7 18. Bg5 Qxe6 19. Kf1`
 
@@ -32,107 +36,109 @@ var game3 = `1. e4 c5 2. Nc3 Nc6 3. g3 e6 4. Bg2 g6
 17. Nf6 Kxf6 18. Nh5+ gxh5 19. Qg5#`
 
 var games = [game1, game2, game3]
+const initialSetup = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
 export default class newappbew extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      fen: "8/8/8/8/8/8/8/8",
+      fen: initialSetup,
       intervalID: null,
       timeout: 1000,
       game: 1,
       currentMoveIndex: -1,
+      autoplay: false
     }
   }
   chess = new Chess()
 
-  move = (dir) => {
+  move = (dir, autoplay=false) => {
+    pgnParser((err, parser) => {
+        const [result] = parser.parse(game);
+        console.log(result);
+    })
     var withoutMoveNumbers = games[this.state.game].replace(/\d+\./g, ' ')
     var moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
     
     dir === 1
-      ? this.chess.move(moves[this.state.currentMoveIndex + dir])
+      ? this.chess.move(moves[this.state.currentMoveIndex + dir].move)
       : this.chess.undo()
 
     this.setState({
       currentMoveIndex: this.state.currentMoveIndex + dir,
-      fen: this.chess.fen().replace(/\s.+/, '')
+      fen: this.chess.fen().replace(/\s.+/, ''),
+      autoplay
     })
+    if (autoplay) {
+      setInterval(() => this.move(1, true), this.state.timeout)
+    }
   }
 
   play = () => {
-    const chess = new Chess()
-    var withoutMoveNumbers = games[this.state.game].replace(/\d+\./g, ' ')
-    var moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
+    // const chess = new Chess()
+    // var withoutMoveNumbers = games[this.state.game].replace(/\d+\./g, ' ')
+    // var moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
 
-    if (this.state.intervalID) {
-      clearInterval(this.state.intervalID)
-    }
-    var id = setInterval(() => {
-      if (moves.length === 1) {
-        clearInterval(id)
-      }
-      chess.move(moves.shift())
-      this.setState({
-        fen: chess.fen().replace(/\s.+/, '')
-      })
-    }, this.state.timeout);
-    this.setState({ intervalID: id })
+    // if (this.state.intervalID) {
+    //   clearInterval(this.state.intervalID)
+    // }
+    // var id = setInterval(() => {
+    //   if (moves.length === 1) {
+    //     clearInterval(id)
+    //   }
+    //   chess.move(moves.shift())
+    //   this.setState({
+    //     fen: chess.fen().replace(/\s.+/, '')
+    //   })
+    // }, this.state.timeout);
+    // this.setState({ intervalID: id })
   }
 
   render() {
     return (
       <ScrollView>
         <View style={styles.container}>
-          {/*<Text>Here is moves</Text>*/}
-          {/*<Text>{moves.join(' ')}</Text>*/}
 
           <Picker
             style={{width: 100}} 
             selectedValue={this.state.game}
             onValueChange={game => {
-              this.setState({ game, currentMoveIndex: -1 })
+              this.setState({ game, currentMoveIndex: -1, fen: initialSetup })
               this.chess.reset()
             }}>
             {games.map((game, i) => <Picker.Item label={`game ${i}`} value={i} />)}
           </Picker>
-          {/*<Button
-            onPress={() => {
-              this.setState({ game: 0 })
-              this.play()
-            }}
-            title="Play game2"
-            color="#841584"
-          />
-          <Button
-            onPress={() => {
-              this.setState({ game: 1 })
-              this.play()
-            }}
-            title="Play game1"
-            color="#841584"
-          />*/}
+
           <Board fen={this.state.fen} />
-          {/*<Text>fdsj</Text>*/}
-          <View style={{height: 50, padding: 10,alignItems: 'center'}}>
+
+          <Switch
+            onValueChange={autoplay => {
+              {/*this.setState({ autoplay })*/}
+              this.move(1, autoplay)
+            }}
+            onTintColor="#00ff00"
+            thumbTintColor="#0000ff"
+            tintColor="#888"
+            value={this.state.autoplay}
+          />
+          
+          <View style={{height: 50, padding: 10, alignItems: 'center'}}>
             <Slider
               style={{width: 300}}
               minimumValue={1}
               maximumValue={5}
               onValueChange={value => {
-                this.setState({ timeout: Math.round(value * 1000) })
-                this.play()
+                this.setState({ timeout: Math.round(value * 100) })
+                this.move()
               }}
             />
           </View>
-
-          {/*<View style={{height: 50}}></View>*/}
           <View style={{
             width: 300,
             flexDirection: 'row',
             justifyContent: 'space-around',
-            borderWidth: 3,
+            borderWidth: 1,
             padding: 10
           }}>
 
@@ -153,13 +159,7 @@ export default class newappbew extends Component {
                 style={{width: 300}}
               />
             </View>
-
           </View>
-          
-          <Text>Here is timeout</Text>
-          <Text>{this.state.timeout}</Text>
-          <Text>Current move index: {this.state.currentMoveIndex}</Text>
-    
         </View>
       </ScrollView>
     );
