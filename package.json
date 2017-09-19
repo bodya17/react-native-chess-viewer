@@ -1,0 +1,31 @@
+{
+	"name": "newappbew",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"start": "node node_modules/react-native/local-cli/cli.js start",
+		"test": "jest"
+	},
+	"dependencies": {
+		"art": "^0.10.1",
+		"chess.js": "^0.10.2",
+		"d3-array": "^1.2.0",
+		"d3-scale": "^1.0.6",
+		"d3-shape": "^1.2.0",
+		"prop-types": "^15.5.10",
+		"react": "16.0.0-alpha.12",
+		"react-native": "0.48.2",
+		"react-native-calendars": "^1.5.8",
+		"react-native-drawer": "^2.5.0",
+		"styled-components": "^2.1.2"
+	},
+	"devDependencies": {
+		"babel-jest": "21.0.2",
+		"babel-preset-react-native": "3.0.2",
+		"jest": "21.0.2",
+		"react-test-renderer": "16.0.0-alpha.12"
+	},
+	"jest": {
+		"preset": "react-native"
+	}
+}
