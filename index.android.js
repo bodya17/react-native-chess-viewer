@@ -54,15 +54,15 @@ export default class newappbew extends Component {
   chess = new Chess()
 
   move = (dir, autoplay=false) => {
-    pgnParser((err, parser) => {
-        const [result] = parser.parse(game);
-        console.log(result);
-    })
+    // pgnParser((err, parser) => {
+    //     const [result] = parser.parse(game);
+    //     console.log(result);
+    // })
     var withoutMoveNumbers = games[this.state.game].replace(/\d+\./g, ' ')
     var moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
     
     dir === 1
-      ? this.chess.move(moves[this.state.currentMoveIndex + dir].move)
+      ? this.chess.move(moves[this.state.currentMoveIndex + dir])
       : this.chess.undo()
 
     this.setState({
@@ -160,6 +160,7 @@ export default class newappbew extends Component {
               />
             </View>
           </View>
+          <Text>Move: {this.state.currentMoveIndex} </Text>
         </View>
       </ScrollView>
     );
