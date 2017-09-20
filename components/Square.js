@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components/native';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import styled from 'styled-components/native'
 
 import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+} from 'react-native'
 
 const SquareContainer = styled.View`
     width: 37;
     height: 37;
-`;
+`
 
 class Square extends Component {
     render() {
@@ -23,7 +23,7 @@ class Square extends Component {
             }}>
                 <Text style={{fontSize: 35}}>{this.props.piece}</Text>
             </SquareContainer>
-        );
+        )
     }
 }
 
@@ -32,4 +32,4 @@ Square.propTypes = {
     color: PropTypes.oneOf(['white', 'black'])
 }
 
-export default Square;
+export default Square

@@ -11,7 +11,6 @@ import {
   Switch
 } from 'react-native'
 
-// import pgnParser from 'pgn-parser'
 import Board from './components/Board.js'
 import { Chess } from 'chess.js'
 import games from './games'
@@ -35,31 +34,24 @@ export default class newappbew extends Component {
   intervalID = null
 
   move = (dir) => {
-    // pgnParser((err, parser) => {
-    //     const [result] = parser.parse(game)
-    //     console.log(result)
-    // })
+
     const withoutMoveNumbers = games[this.state.game].replace(/\d+\./g, ' ')
     const moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
-    let currentMoveIndex
+    const currentMoveIndex = this.state.currentMoveIndex
 
     if (
-      (this.state.currentMoveIndex === moves.length - 1 && dir === 1) ||
-      (this.state.currentMoveIndex === -1 && dir === -1)) {
-      currentMoveIndex = this.state.currentMoveIndex
-    } else {
-      currentMoveIndex = this.state.currentMoveIndex + dir
-    }
+      (this.state.currentMoveIndex !== moves.length - 1 && dir === 1) ||
+      (this.state.currentMoveIndex !== -1 && dir === -1)) {
+      
+      dir === 1
+        ? this.chess.move(moves[currentMoveIndex + dir])
+        : this.chess.undo()
 
-    dir === 1
-      ? this.chess.move(moves[currentMoveIndex])
-      : this.chess.undo()
-
-    this.setState({
-      currentMoveIndex,
-      fen: this.chess.fen().replace(/\s.+/, '')
-    })
-
+      this.setState({
+        currentMoveIndex: currentMoveIndex + dir,
+        fen: this.chess.fen().replace(/\s.+/, '')
+      })
+    } 
   }
 
   render() {
@@ -74,34 +66,42 @@ export default class newappbew extends Component {
               this.setState({ game, currentMoveIndex: -1, fen: initialSetup })
               this.chess.reset()
             }}>
-            {games.map((game, i) => <Picker.Item label={`game ${i}`} value={i} />)}
+            {games.map((game, i) => <Picker.Item key={i} label={`game ${i}`} value={i} />)}
           </Picker>
 
           <Board fen={this.state.fen} />
-
-          <Switch
-            onValueChange={autoplay => {
-              this.setState({ autoplay })
-              if (autoplay) {
-                this.intervalID = setInterval(() => this.move(1), this.state.timeout)
-              } else if (this.intervalID) {
-                clearInterval(this.intervalID)
-                this.intervalID = null
-              }
-            }}
-            onTintColor="#00ff00"
-            thumbTintColor="#0000ff"
-            tintColor="#888"
-            value={this.state.autoplay}
-          />
+          
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text>Autoplay: </Text>
+            <Switch
+              onValueChange={autoplay => {
+                this.setState({ autoplay })
+                if (autoplay) {
+                  this.intervalID = setInterval(() => this.move(1), this.state.timeout)
+                } else if (this.intervalID) {
+                  clearInterval(this.intervalID)
+                  this.intervalID = null
+                }
+              }}
+              onTintColor="#00ff00"
+              thumbTintColor="#0000ff"
+              tintColor="#888"
+              value={this.state.autoplay}
+            />
+          </View>
           
           <View style={{height: 50, padding: 10, alignItems: 'center'}}>
             <Slider
               style={{width: 300}}
               minimumValue={1}
-              maximumValue={5}
+              maximumValue={20}
               onValueChange={value => {
-                this.setState({ timeout: Math.round(value * 100) })
+                const timeout = Math.round(value * 100)
+                this.setState({ timeout })
+                if (this.state.autoplay) {
+                  clearInterval(this.intervalID)
+                  this.intervalID = setInterval(() => this.move(1), timeout)
+                }
               }}
             />
           </View>

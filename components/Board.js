@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
+} from 'react-native'
 
-import Square from './Square';
+import Square from './Square'
 
 const fenToPiece = {
     r: '♜',
@@ -49,26 +49,17 @@ class Board extends Component {
         for (let i = 0; i < rows.length; i++) {
             const row = []
             for (let j = 0; j < rows[i].length; j++) {
-                row.push(<Square color={(i + j) % 2 ? 'black' : 'white'} piece={fenToPiece[rows[i][j]]} />)
+                row.push(<Square key={i+j} color={(i + j) % 2 ? 'black' : 'white'} piece={fenToPiece[rows[i][j]]} />)
             }
-            board.push(<View style={{flexDirection: 'row'}}>{row}</View>)
+            board.push(<View key={i} style={{flexDirection: 'row'}}>{row}</View>)
         }
-
-
-        // for (let i = 0; i < 8; i++) {
-        //     const row = []
-        //     for (let j = 0; j < 8; j++) {
-        //         row.push(<Square color={(i + j) % 2 ? 'black' : 'white'} piece={randomElement(pieces)} />)
-        //     }
-        //     board.push(<View style={{flexDirection: 'row'}}>{row}</View>)
-        // }
 
         return (
             <View>
                 {board}
             </View>
-        );
+        )
     }
 }
 
-export default Board;
+export default Board
