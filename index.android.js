@@ -8,13 +8,14 @@ import {
   Button,
   Slider,
   Picker,
-  Switch
+  Switch,
+  Image
 } from 'react-native'
 
 import Board from './components/Board.js'
 import { Chess } from 'chess.js'
 import games from './games'
-
+import board64 from './boardBase64'
 const initialSetup = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
 
 export default class newappbew extends Component {
@@ -25,7 +26,7 @@ export default class newappbew extends Component {
       fen: initialSetup,
       intervalID: null,
       timeout: 1000,
-      game: 1,
+      game: 0,
       currentMoveIndex: -1,
       autoplay: false
     }
@@ -69,8 +70,21 @@ export default class newappbew extends Component {
             {games.map((game, i) => <Picker.Item key={i} label={`game ${i}`} value={i} />)}
           </Picker>
 
-          <Board fen={this.state.fen} />
-          
+          {/*<Image
+            style={{width: 300, height: 300}}
+            source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
+          />*/}
+          <View
+            style={{width: 400, height: 400}}
+          >
+            <Image
+              style={{width: null, height: null, flex: 1}}
+              source={{uri: board64}}
+            >
+              <Board fen={this.state.fen} />
+            </Image>
+          </View>
+
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text>Autoplay: </Text>
             <Switch
@@ -131,6 +145,7 @@ export default class newappbew extends Component {
               />
             </View>
           </View>
+
         </View>
       </ScrollView>
     )

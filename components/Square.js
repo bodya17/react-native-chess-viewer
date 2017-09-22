@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native'
+import board64 from '../boardBase64'
 
 import {
   StyleSheet,
   Text,
   View,
+  Image
 } from 'react-native'
 
 const SquareContainer = styled.View`
@@ -17,15 +19,22 @@ class Square extends Component {
     render() {
         return (
             <SquareContainer style={{
-                backgroundColor: this.props.color === 'white' ? '#fff' : 'rgba(0, 0, 0, .3)',
                 justifyContent: 'center',
-                alignItems: 'center'
+                alignItems: 'center',
+                width: 50, height: 50
+
             }}>
-                <Text style={{fontSize: 35}}>{this.props.piece}</Text>
+                <Image
+                    style={{width: 50, height: 50, flex: 1}}
+                    source={{uri: this.props.base64}}
+                >
+                </Image>
+                {/*<Text style={{fontSize: 34}}>{this.props.piece}</Text>*/}
             </SquareContainer>
         )
     }
 }
+
 
 Square.propTypes = {
     piece: PropTypes.string,
