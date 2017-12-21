@@ -1,44 +1,27 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native'
-import board64 from '../boardBase64'
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image
-} from 'react-native'
+import { Text, Image } from 'react-native'
 
 const SquareContainer = styled.View`
-    width: 37;
-    height: 37;
+  width: 40;
+  height: 40;
 `
 
-class Square extends Component {
-    render() {
-        return (
-            <SquareContainer style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 50, height: 50
-
-            }}>
-                <Image
-                    style={{width: 50, height: 50, flex: 1}}
-                    source={{uri: this.props.base64}}
-                >
-                </Image>
-                {/*<Text style={{fontSize: 34}}>{this.props.piece}</Text>*/}
-            </SquareContainer>
-        )
-    }
-}
-
+const Square = props => (
+<SquareContainer>
+  <Image
+    style={{flex: 1}}
+    source={{uri: props.base64}}
+  />
+  </SquareContainer>
+)
 
 Square.propTypes = {
-    piece: PropTypes.string,
-    color: PropTypes.oneOf(['white', 'black'])
+  base64: PropTypes.string,
+  width: PropTypes.number,
+  height: PropTypes.number
 }
 
 export default Square
