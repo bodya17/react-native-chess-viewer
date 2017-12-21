@@ -1,3 +1,3 @@
 # simple chess games viewer in react native
 
-![](Android-Emulator-Nexus.gif)
+![](assets/Android-Emulator-Nexus.gif)
