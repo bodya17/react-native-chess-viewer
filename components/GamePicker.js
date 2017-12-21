@@ -1,6 +1,6 @@
 import React from 'react'
 import { Picker } from 'react-native'
-import {observer, inject} from 'mobx-react'
+import { observer, inject } from 'mobx-react'
 
 const GamePicker = props => (
   <Picker

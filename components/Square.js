@@ -19,9 +19,7 @@ const Square = props => (
 )
 
 Square.propTypes = {
-  base64: PropTypes.string,
-  width: PropTypes.number,
-  height: PropTypes.number
+  base64: PropTypes.string
 }
 
 export default Square

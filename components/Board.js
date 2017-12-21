@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, Image } from 'react-native'
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 import board64 from '../assets/boardBase64'
 import * as fenToPiece from '../assets/images/pieces'
@@ -33,8 +33,6 @@ class Board extends Component {
       for (let j = 0; j < rows[i].length; j++) {
         row.push(<Square
           key={`${i}${j}`}
-          width={40}
-          height={50}
           base64={fenToPiece[rows[i][j]]}
         />)
       }
@@ -42,12 +40,8 @@ class Board extends Component {
     }
 
     return (
-      <View
-          style={{width: SIDE_LEN, height: SIDE_LEN}}
-      >
-        <Image
-          source={{uri: board64}}
-        >
+      <View style={{width: SIDE_LEN, height: SIDE_LEN}}>
+        <Image source={{uri: board64}}>
           {board}
         </Image>
       </View>

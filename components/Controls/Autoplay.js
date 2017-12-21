@@ -3,7 +3,7 @@ import { Text, View, Switch } from 'react-native'
 import {observer, inject} from 'mobx-react'
 
 const Autoplay = props => (
-  <View>
+  <View style={{flexDirection: 'row', margin: 10}}>
     <Text>Autoplay: </Text>
     <Switch
       onTintColor="#00ff00"

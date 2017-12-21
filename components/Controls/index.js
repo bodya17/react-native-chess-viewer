@@ -8,7 +8,7 @@ import ForwardBack from './ForwardBack';
 class Controls extends Component {
   render() {
     return (
-      <View>
+      <View style={{alignItems: 'center'}}>
         <Autoplay />
         <SpeedChooser />
         <ForwardBack />

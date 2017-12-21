@@ -43,6 +43,10 @@ export default class GameStore {
       this.currentMoveIndex = currentMoveIndex + dir,
       this.fen = this.chess.fen().replace(/\s.+/, '')
     }
+
+    if (this.currentMoveIndex === moves.length - 1) {
+      clearInterval(this.intervalID)      
+    }
   }
 
   @action.bound changeTimeout(value) {
