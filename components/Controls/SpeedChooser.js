@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Slider, Text } from 'react-native'
+import { Slider, Text } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components/native'
 
@@ -9,6 +9,7 @@ const Container = styled.View`
   align-items: center;
   flex-direction: row
 `
+
 const SpeedChooser = props => (
   <Container>
     <Text>Speed:</Text>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Button } from 'react-native'
+import { Button } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components/native'
 
@@ -44,7 +44,7 @@ class ForwardBack extends Component {
           />
         </ButtonContainer>
       </Container>
-    );
+    )
   }
 }
 

@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/native'
-import { Text, Image } from 'react-native'
+import { Image } from 'react-native'
 
 const SquareContainer = styled.View`
   width: 40;

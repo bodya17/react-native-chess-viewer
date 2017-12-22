@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View, Image } from 'react-native'
-import { observer, inject } from 'mobx-react';
+import { View, Image } from 'react-native'
+import { observer, inject } from 'mobx-react'
 
 import board64 from '../assets/boardBase64'
 import * as fenToPiece from '../assets/images/pieces'
