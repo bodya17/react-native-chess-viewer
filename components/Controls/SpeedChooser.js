@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { View, Slider, Text } from 'react-native'
 import { observer, inject } from 'mobx-react'
 import styled from 'styled-components/native'
@@ -9,23 +9,16 @@ const Container = styled.View`
   align-items: center;
   flex-direction: row
 `
+const SpeedChooser = props => (
+  <Container>
+    <Text>Speed:</Text>
+    <Slider
+      style={{width: 300}}
+      minimumValue={1}
+      maximumValue={20}
+      onValueChange={props.store.changeTimeout}
+    />
+  </Container>
+)
 
-@inject('store')
-@observer
-class SpeedChooser extends Component {
-  render() {
-    return (
-      <Container>
-        <Text>Speed:</Text>
-        <Slider
-          style={{width: 300}}
-          minimumValue={1}
-          maximumValue={20}
-          onValueChange={this.props.store.changeTimeout}
-        />
-      </Container>
-    );
-  }
-}
-
-export default SpeedChooser
+export default inject('store')(observer(SpeedChooser))

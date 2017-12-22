@@ -25,7 +25,7 @@ function transform(fenRow) {
 @observer
 class Board extends Component {
   render() {
-    const {fen} = this.props.store
+    const { fen } = this.props.store
     const board = []
     const rows = fen.split('/').map(transform)
     for (let i = 0; i < rows.length; i++) {

@@ -28,9 +28,7 @@ export default class GameStore {
   @action.bound move(dir) {
     const withoutMoveNumbers = this.games[this.game].replace(/\d+\./g, ' ')
     const moves = withoutMoveNumbers.split(/\s+/).filter(move => move !== '')
-    const {
-      currentMoveIndex
-    } = this
+    const { currentMoveIndex } = this
 
     if (
       (currentMoveIndex !== moves.length - 1 && dir === 1) ||
@@ -45,7 +43,8 @@ export default class GameStore {
     }
 
     if (this.currentMoveIndex === moves.length - 1) {
-      clearInterval(this.intervalID)      
+      clearInterval(this.intervalID)
+      this.autoplay = false
     }
   }
 
